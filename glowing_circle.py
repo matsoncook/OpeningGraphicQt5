@@ -5,10 +5,13 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import compileShader, compileProgram
 import numpy as np
 
+from base.base_object import BaseObject
+from glowing_circle_animations.glowing_circle_animator import MoveRight_1
 
 
 class GlowingCircle(BaseObject):
     def __init__(self):
+        super().__init__()
 
         self.shader_program = None
         self.vao = None
@@ -24,6 +27,9 @@ class GlowingCircle(BaseObject):
     #     self.init_shaders()
     #     self.init_geometry()
         self.velocity = 1 #Half a screen per sec
+        self.a = MoveRight_1(self)
+        self.add_animator(self.a)
+
 
     def init_shaders(self):
         vertex_shader = """
@@ -95,19 +101,20 @@ class GlowingCircle(BaseObject):
         pass
 
     def update(self,time_ms):
-        p = self.previous_time_ms
-        t = (time_ms - self.previous_time_ms) /1000
-        self.previous_time_ms = time_ms
-        if p == 0:
-            return
-
-        velocity = self.velocity * t
-
-        c_x = self.circle_center[0]
-        c_x += velocity * self.direction
-
-        if c_x >= 1.0 or c_x <= -1.0:
-           self.direction *= -1
-
-        c_x += (0.01 * self.direction)
-        self.circle_center[0] = c_x
+        super().update(time_ms)
+        # p = self.previous_time_ms
+        # t = (time_ms - self.previous_time_ms) /1000
+        # self.previous_time_ms = time_ms
+        # if p == 0:
+        #     return
+        #
+        # velocity = self.velocity * t
+        #
+        # c_x = self.circle_center[0]
+        # c_x += velocity * self.direction
+        #
+        # if c_x >= 1.0 or c_x <= -1.0:
+        #    self.direction *= -1
+        #
+        # c_x += (0.01 * self.direction)
+        # self.circle_center[0] = c_x
