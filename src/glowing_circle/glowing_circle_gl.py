@@ -30,6 +30,8 @@ class GlowingCircle(BaseObject):
         self.a = MoveRight_1(self)
         self.add_animator(self.a)
 
+        self.circle_color = [1.0, 0.0, 0.0]
+
 
     def init_shaders(self):
         vertex_shader = """
@@ -46,6 +48,7 @@ class GlowingCircle(BaseObject):
            uniform vec2 resolution;
            uniform vec2 circle_center;
            uniform float circle_radius;
+           uniform vec3 circle_color;
 
            void main() {
            
@@ -62,9 +65,9 @@ class GlowingCircle(BaseObject):
                float intensity = smoothstep(circle_radius*1.5, circle_radius * 0.8, dist);//increase glow
                
                
-               //vec3 color = mix(vec3(1.0, 0.8, 0.4), vec3(0.0), intensity);
-               vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(1.0), intensity); //white
-               fragColor = vec4(color, 1.0 - intensity);
+               // Apply color and transparency
+               vec3 color = circle_color * intensity;
+               fragColor = vec4(color, intensity);  // Alpha is based on intensity
            }
            """
         self.shader_program = compileProgram(
@@ -101,7 +104,7 @@ class GlowingCircle(BaseObject):
                     resolution.height())
         glUniform2f(glGetUniformLocation(self.shader_program, "circle_center"), *self.circle_center)
         glUniform1f(glGetUniformLocation(self.shader_program, "circle_radius"), self.circle_radius)
-        #glUniform2f(glGetUniformLocation(self.shader_program, "circle_position"), *self.circle_position)
+        glUniform3f(glGetUniformLocation(self.shader_program, "circle_color"), *self.circle_color)
 
         glBindVertexArray(self.vao)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4)
