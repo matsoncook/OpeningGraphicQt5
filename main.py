@@ -6,6 +6,7 @@ from OpenGL.GL.shaders import compileShader, compileProgram
 import numpy as np
 
 from glowing_circle.glowing_circle_gl import GlowingCircle
+from shaders import Shaders
 
 
 class GlowingCircleWidget(QOpenGLWidget):
@@ -25,11 +26,11 @@ class GlowingCircleWidget(QOpenGLWidget):
     def initializeGL(self):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-
-        self.glowing_circle1.init_shaders()
+        shaders = Shaders()
+        self.glowing_circle1.init_shaders(shaders)
         self.glowing_circle1.init_geometry()
 
-        self.glowing_circle2.init_shaders()
+        self.glowing_circle2.init_shaders(shaders)
         self.glowing_circle2.init_geometry()
 
 
