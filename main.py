@@ -5,13 +5,14 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import compileShader, compileProgram
 import numpy as np
 
-from glowing_circle import GlowingCircle
+from glowing_circle.glowing_circle_gl import GlowingCircle
 
 
 class GlowingCircleWidget(QOpenGLWidget):
     def __init__(self):
         super().__init__()
-        self.glowing_circle = GlowingCircle()
+        self.glowing_circle1 = GlowingCircle(y=0.25)
+        self.glowing_circle2 = GlowingCircle(y=-0.25)
 
         self.animation_timer = QTimer()
         self.animation_timer.timeout.connect(self.update_animation)
@@ -25,8 +26,11 @@ class GlowingCircleWidget(QOpenGLWidget):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-        self.glowing_circle.init_shaders()
-        self.glowing_circle.init_geometry()
+        self.glowing_circle1.init_shaders()
+        self.glowing_circle1.init_geometry()
+
+        self.glowing_circle2.init_shaders()
+        self.glowing_circle2.init_geometry()
 
 
 
@@ -37,13 +41,15 @@ class GlowingCircleWidget(QOpenGLWidget):
         glClear(GL_COLOR_BUFFER_BIT)
         glDisable(GL_DEPTH_TEST)
 
-        self.glowing_circle.paintGL(self)
+        self.glowing_circle1.paintGL(self)
+        self.glowing_circle2.paintGL(self)
 
     def update_animation(self):
         # Update the circle's position (e.g., move in a sine wave)
         t = QTimer().remainingTime() / 1000.0  # Time in seconds
 
-        self.glowing_circle.update(self.timer.elapsed())
+        self.glowing_circle1.update(self.timer.elapsed())
+        self.glowing_circle2.update(self.timer.elapsed())
 
 
         self.update()  # Trigger a redraw
@@ -51,7 +57,8 @@ class GlowingCircleWidget(QOpenGLWidget):
     def resizeGL(self, w, h):
         glViewport(0, 0, w, h)
 
-        self.glowing_circle.resizeGL(w, h)
+        self.glowing_circle1.resizeGL(w, h)
+        self.glowing_circle2.resizeGL(w, h)
 
 
 if __name__ == "__main__":

@@ -6,18 +6,18 @@ from OpenGL.GL.shaders import compileShader, compileProgram
 import numpy as np
 
 from base.base_object import BaseObject
-from glowing_circle_animations.glowing_circle_animator import MoveRight_1
+from glowing_circle.glowing_circle_animator import MoveRight_1
 
 
 class GlowingCircle(BaseObject):
-    def __init__(self):
+    def __init__(self, y =0.0):
         super().__init__()
 
         self.shader_program = None
         self.vao = None
 
 
-        self.circle_center = [0.0, 0.0]
+        self.circle_center = [0.0, y]
         self.circle_radius = 0.2
         self.direction = 1
         self.previous_time_ms = 0
@@ -48,11 +48,20 @@ class GlowingCircle(BaseObject):
            uniform float circle_radius;
 
            void main() {
+           
+           
+               //This is setting up a -1 to 1 normalised window
                vec2 uv = gl_FragCoord.xy / resolution;
                vec2 p = uv * 2.0 - 1.0;
+               
+               
                float dist = length(p - circle_center);
+               
+               
                //float intensity = smoothstep(circle_radius, circle_radius * 0.9, dist);
                float intensity = smoothstep(circle_radius*1.5, circle_radius * 0.8, dist);//increase glow
+               
+               
                //vec3 color = mix(vec3(1.0, 0.8, 0.4), vec3(0.0), intensity);
                vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(1.0), intensity); //white
                fragColor = vec4(color, 1.0 - intensity);
