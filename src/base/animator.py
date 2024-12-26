@@ -22,7 +22,7 @@ class Animator(ABC):
 
     @abstractmethod
     def next_animation(self)-> "Animator":
-        return None
+        return self
 
     @abstractmethod
     def reset(self):

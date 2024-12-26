@@ -63,8 +63,8 @@ class MoveRight_1(Animator):
         self.x = c_x
         return finish
 
-    def next_animation(self) -> "Animator":
-        return self
+    # def next_animation(self) -> "Animator":
+    #     return self
 
     def reset(self):
         self.x = -1
@@ -75,8 +75,8 @@ class MoveLeft_1(Animator):
         super().__init__()
         self.glowing_circle = glowing_circle
         self.velocity = 1
-        self.direction = 1
-        self.x = -1
+        self.direction = -1
+        self.x = 1
         self.reset()
 
     def do_update(self, elapsed_time_secs):
@@ -100,6 +100,6 @@ class MoveLeft_1(Animator):
         return None
 
     def reset(self):
-        self.x = -1
+        self.x = 1
         return
 
