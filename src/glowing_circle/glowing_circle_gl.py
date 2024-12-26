@@ -9,8 +9,8 @@ from shaders import Shaders
 
 
 class GlowingCircle(BaseObject):
-    def __init__(self, y =0.0):
-        super().__init__()
+    def __init__(self,name, y =0.0):
+        super().__init__(name)
 
         self.shader_program = None
         self.vao = None
@@ -50,12 +50,13 @@ class GlowingCircle(BaseObject):
     def paintGL(self,context):
 
 
+
         glUseProgram(self.shader_program)
 
         # Set uniform values
-        resolution = context.size()
-        glUniform2f(glGetUniformLocation(self.shader_program, "resolution"), resolution.width(),
-                    resolution.height())
+        screen_resolution = context.size()
+        glUniform2f(glGetUniformLocation(self.shader_program, "resolution"), screen_resolution.width(),
+                    screen_resolution.height())
         glUniform2f(glGetUniformLocation(self.shader_program, "circle_center"), *self.circle_center)
         glUniform1f(glGetUniformLocation(self.shader_program, "circle_radius"), self.circle_radius)
         glUniform3f(glGetUniformLocation(self.shader_program, "circle_color"), *self.circle_color)
