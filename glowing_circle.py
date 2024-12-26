@@ -7,20 +7,29 @@ import numpy as np
 
 
 
-class GlowingCircle:
+class GlowingCircle(BaseObject):
     def __init__(self):
 
         self.shader_program = None
         self.vao = None
 
-    def initializeGL(self):
-        self.init_shaders()
-        self.init_geometry()
+
+        self.circle_center = [0.0, 0.0]
+        self.circle_radius = 0.2
+        self.direction = 1
+        self.previous_time_ms = 0
+        #self.circle_position = [1.0, 0.0]
+
+        # def initializeGL(self):
+    #     self.init_shaders()
+    #     self.init_geometry()
+        self.velocity = 1 #Half a screen per sec
 
     def init_shaders(self):
         vertex_shader = """
            #version 330 core
            layout(location = 0) in vec2 position;
+           //uniform vec2 circle_position;
            void main() {
                gl_Position = vec4(position, 0.0, 1.0);
            }
@@ -39,7 +48,7 @@ class GlowingCircle:
                //float intensity = smoothstep(circle_radius, circle_radius * 0.9, dist);
                float intensity = smoothstep(circle_radius*1.5, circle_radius * 0.8, dist);//increase glow
                //vec3 color = mix(vec3(1.0, 0.8, 0.4), vec3(0.0), intensity);
-               vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(0.0), intensity); //white
+               vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(1.0), intensity); //white
                fragColor = vec4(color, 1.0 - intensity);
            }
            """
@@ -75,11 +84,30 @@ class GlowingCircle:
         resolution = context.size()
         glUniform2f(glGetUniformLocation(self.shader_program, "resolution"), resolution.width(),
                     resolution.height())
-        glUniform2f(glGetUniformLocation(self.shader_program, "circle_center"), 0.0, 0.0)
-        glUniform1f(glGetUniformLocation(self.shader_program, "circle_radius"), 0.1)
+        glUniform2f(glGetUniformLocation(self.shader_program, "circle_center"), *self.circle_center)
+        glUniform1f(glGetUniformLocation(self.shader_program, "circle_radius"), self.circle_radius)
+        #glUniform2f(glGetUniformLocation(self.shader_program, "circle_position"), *self.circle_position)
 
         glBindVertexArray(self.vao)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4)
 
     def resizeGL(self, w, h):
         pass
+
+    def update(self,time_ms):
+        p = self.previous_time_ms
+        t = (time_ms - self.previous_time_ms) /1000
+        self.previous_time_ms = time_ms
+        if p == 0:
+            return
+
+        velocity = self.velocity * t
+
+        c_x = self.circle_center[0]
+        c_x += velocity * self.direction
+
+        if c_x >= 1.0 or c_x <= -1.0:
+           self.direction *= -1
+
+        c_x += (0.01 * self.direction)
+        self.circle_center[0] = c_x
