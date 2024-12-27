@@ -29,10 +29,11 @@ class GlowingCircleWidget(QOpenGLWidget):
         self.timer.start()
 
     def setup_world(self):
-        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
-        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
 
+        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
         self.world.add_child(self.glowing_circle1)
+
+        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
         self.world.add_child(self.glowing_circle2)
 
         self.line1 = GlowingLine(name = "line1",y=0.25)
