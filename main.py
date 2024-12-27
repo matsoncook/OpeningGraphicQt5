@@ -7,6 +7,7 @@ import numpy as np
 
 from base.base_object import GroupObject
 from glowing_circle.glowing_circle_gl import GlowingCircle
+from line.line_gl import GlowingLine
 from shaders import Shaders
 
 
@@ -14,13 +15,11 @@ class GlowingCircleWidget(QOpenGLWidget):
     def __init__(self):
         super().__init__()
         self.world = GroupObject("World")
-
+        self.setup_world()
        # shaders = Shaders()
-        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1",y=0.25)
-        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2",y=-0.25)
 
-        self.world.add_child(self.glowing_circle1)
-        self.world.add_child(self.glowing_circle2)
+
+
 
         self.animation_timer = QTimer()
         self.animation_timer.timeout.connect(self.update_animation)
@@ -28,6 +27,16 @@ class GlowingCircleWidget(QOpenGLWidget):
 
         self.timer = QElapsedTimer()
         self.timer.start()
+
+    def setup_world(self):
+        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
+        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
+
+        self.world.add_child(self.glowing_circle1)
+        self.world.add_child(self.glowing_circle2)
+
+        self.line = GlowingLine(name = "line1")
+        self.world.add_child(self.line)
 
 
     def initializeGL(self):

@@ -12,8 +12,8 @@ from OpenGL.GL.shaders import compileShader, compileProgram
 
 
 class GlowingLine(BaseObject):
-    def __init__(self, y =0.0):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
 
         self.program = None
         self.vao = None
@@ -21,33 +21,17 @@ class GlowingLine(BaseObject):
 
 
         self.rect_pos = np.array([-0.2, -0.2, 0.2, -0.2, 0.2, 0.2, -0.2, 0.2], dtype=np.float32)
-        self.rect_speed = [0.01, 0.01]
+        self.rect_speed = [0.00, 0.00]
         self.rect_scale = [1.0, 1.0]
         self.scale_dir = [0.01, 0.01]
 
+    def init_gl(self,shaders:Shaders):
+        self.init_shaders(shaders)
+        self.init_geometry()
 
-    def init_shaders(self,shader: Shaders):
-        # Vertex and Fragment Shader source
-        VERTEX_SHADER = """
-        #version 330
-        in vec2 position;
-        uniform mat4 transform;
-        void main() {
-            gl_Position = transform * vec4(position, 0.0, 1.0);
-        }
-        """
+    def init_shaders(self,shaders: Shaders):
 
-        FRAGMENT_SHADER = """
-        #version 330
-        out vec4 FragColor;
-        void main() {
-            FragColor = vec4(1.0, 0.5, 0.2, 1.0);
-        }
-        """
-        self.program = compileProgram(
-            compileShader(VERTEX_SHADER, GL_VERTEX_SHADER),
-            compileShader(FRAGMENT_SHADER, GL_FRAGMENT_SHADER),
-        )
+        self.program = shaders.line_shader.program
 
     def init_geometry(self):
         # Create VAO and VBO
@@ -66,7 +50,7 @@ class GlowingLine(BaseObject):
         glBindBuffer(GL_ARRAY_BUFFER, 0)
         glBindVertexArray(0)
 
-    def paintGL(self,context):
+    def paint_gl(self,context):
 
         glUseProgram(self.program)
 
@@ -84,9 +68,12 @@ class GlowingLine(BaseObject):
         glDrawArrays(GL_QUADS, 0, 4)
         glBindVertexArray(0)
 
-    def resizeGL(self, w, h):
+    def resize_gl(self, w, h):
         pass
 
     def update(self,time_ms):
-        super().update(time_ms)
+        self.rect_scale[0] += 0.01
+        #super().update(time_ms)
+        #self.rect_speed[0] += 0.01
+        #self.rect_speed[1] += 0.01
 
