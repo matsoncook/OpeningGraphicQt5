@@ -17,7 +17,7 @@ class GlowingCircle(BaseObject):
 
 
         self.circle_center = [0.0, y]
-        self.circle_radius = 0.2
+        self.circle_radius = 0.05
 
         self.a = MoveRight_1(self)
         self.add_animator(self.a)

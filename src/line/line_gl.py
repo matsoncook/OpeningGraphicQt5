@@ -12,19 +12,21 @@ from OpenGL.GL.shaders import compileShader, compileProgram
 
 
 class GlowingLine(BaseObject):
-    def __init__(self, name):
+    def __init__(self, name, y =0.0):
         super().__init__(name)
 
         self.program = None
         self.vao = None
         self.vbo = None
 
+        halfwidth = 0.025
 
-        self.rect_pos = np.array([-1.0, -0.05,
-                                  1.0, -0.05,
-                                  1.0, 0.05,
-                                  -1.0, 0.05], dtype=np.float32)
-        self.rect_speed = [-2.0, 0.00]
+
+        self.rect_pos = np.array([-1.0, -halfwidth,
+                                  1.0, -halfwidth,
+                                  1.0,halfwidth,
+                                  -1.0, halfwidth], dtype=np.float32)
+        self.rect_speed = [-2.0, y]
         self.rect_scale = [1.0, 1.0]
         self.scale_dir = [0.01, 0.01]
 
@@ -77,6 +79,6 @@ class GlowingLine(BaseObject):
     def update(self,time_ms):
         #self.rect_scale[0] += 0.01
         #super().update(time_ms)
-        self.rect_speed[0] += 0.01
+        self.rect_speed[0] += 0.015
         #self.rect_speed[1] += 0.01
 

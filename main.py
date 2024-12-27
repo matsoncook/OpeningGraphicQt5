@@ -35,8 +35,11 @@ class GlowingCircleWidget(QOpenGLWidget):
         self.world.add_child(self.glowing_circle1)
         self.world.add_child(self.glowing_circle2)
 
-        self.line = GlowingLine(name = "line1")
-        self.world.add_child(self.line)
+        self.line1 = GlowingLine(name = "line1",y=0.25)
+        self.world.add_child(self.line1)
+
+        self.line2 = GlowingLine(name="line2",y=-0.25)
+        self.world.add_child(self.line2)
 
 
     def initializeGL(self):
@@ -83,6 +86,7 @@ class GlowingCircleWidget(QOpenGLWidget):
         # self.glowing_circle2.resizeGL(w, h)
 
         self.world.resize(w, h)
+
 
 
 if __name__ == "__main__":
