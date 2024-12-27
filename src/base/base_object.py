@@ -1,6 +1,7 @@
 from typing import List
 
 from base.animator import Animator
+from shaders import Shaders
 
 
 class BaseObject:
@@ -10,6 +11,7 @@ class BaseObject:
         self.children: List["BaseObject"] = []
 
     def update(self,time_ms):
+
         for animator in self.animator_list:
             finish = animator.update(time_ms)
             if finish:
@@ -17,6 +19,7 @@ class BaseObject:
                 if animator.next_animation() is not None:
                     self.animator_list.append(animator.next_animation())
                     animator.next_animation().reset()
+
         for base_object in self.children:
             base_object.update(time_ms)
 
@@ -27,15 +30,30 @@ class BaseObject:
         self.children.append(base_object)
 
     #override this to do initialisation
-    def init_gl(self):
+    def init_gl(self,shaders: Shaders):
         pass
 
-    def init(self):
-        self.init_gl()
+    # override this to do resize
+    def resize_gl(self,w,h):
+        pass
+
+    def paint_gl(self,context):
+        pass
+
+    def init(self,shaders: Shaders):
+        self.init_gl(shaders)
         for base_object in self.children:
-            base_object.init()
+            base_object.init(shaders)
 
+    def paint(self,context):
+        self.paint_gl(context)
+        for base_object in self.children:
+            base_object.paint(context)
 
+    def resize(self,w,h):
+        self.resize_gl(w,h)
+        for base_object in self.children:
+            base_object.resize(w,h)
 
 class GroupObject(BaseObject):
     def __init__(self,name):

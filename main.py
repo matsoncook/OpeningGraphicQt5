@@ -14,8 +14,13 @@ class GlowingCircleWidget(QOpenGLWidget):
     def __init__(self):
         super().__init__()
         self.world = GroupObject("World")
+
+       # shaders = Shaders()
         self.glowing_circle1 = GlowingCircle(name="GlowingCircle1",y=0.25)
         self.glowing_circle2 = GlowingCircle(name="GlowingCircle2",y=-0.25)
+
+        self.world.add_child(self.glowing_circle1)
+        self.world.add_child(self.glowing_circle2)
 
         self.animation_timer = QTimer()
         self.animation_timer.timeout.connect(self.update_animation)
@@ -29,11 +34,14 @@ class GlowingCircleWidget(QOpenGLWidget):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         shaders = Shaders()
-        self.glowing_circle1.init_shaders(shaders)
-        self.glowing_circle1.init_geometry()
 
-        self.glowing_circle2.init_shaders(shaders)
-        self.glowing_circle2.init_geometry()
+        self.world.init(shaders)
+
+        # self.glowing_circle1.init_shaders(shaders)
+        # self.glowing_circle1.init_geometry()
+        #
+        # self.glowing_circle2.init_shaders(shaders)
+        # self.glowing_circle2.init_geometry()
 
 
 
@@ -44,24 +52,28 @@ class GlowingCircleWidget(QOpenGLWidget):
         glClear(GL_COLOR_BUFFER_BIT)
         glDisable(GL_DEPTH_TEST)
 
-        self.glowing_circle1.paintGL(self)
-        self.glowing_circle2.paintGL(self)
+        self.world.paint(self)
+
+        # self.glowing_circle1.paintGL(self)
+        # self.glowing_circle2.paintGL(self)
 
     def update_animation(self):
         # Update the circle's position (e.g., move in a sine wave)
         t = QTimer().remainingTime() / 1000.0  # Time in seconds
 
-        self.glowing_circle1.update(self.timer.elapsed())
-        self.glowing_circle2.update(self.timer.elapsed())
-
+        # self.glowing_circle1.update(self.timer.elapsed())
+        # self.glowing_circle2.update(self.timer.elapsed())
+        self.world.update(self.timer.elapsed())
 
         self.update()  # Trigger a redraw
 
     def resizeGL(self, w, h):
         glViewport(0, 0, w, h)
 
-        self.glowing_circle1.resizeGL(w, h)
-        self.glowing_circle2.resizeGL(w, h)
+        # self.glowing_circle1.resizeGL(w, h)
+        # self.glowing_circle2.resizeGL(w, h)
+
+        self.world.resize(w, h)
 
 
 if __name__ == "__main__":

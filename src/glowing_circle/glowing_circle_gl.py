@@ -9,7 +9,7 @@ from shaders import Shaders
 
 
 class GlowingCircle(BaseObject):
-    def __init__(self,name, y =0.0):
+    def __init__(self, name,  y =0.0):
         super().__init__(name)
 
         self.shader_program = None
@@ -24,7 +24,9 @@ class GlowingCircle(BaseObject):
 
         self.circle_color = [1.0, 0.0, 0.0]
 
-
+    def init_gl(self,shaders: Shaders):
+        self.init_shaders(shaders)
+        self.init_geometry()
     def init_shaders(self,shader: Shaders):
 
         self.shader_program = shader.glowing_circle_shader_program
@@ -47,9 +49,7 @@ class GlowingCircle(BaseObject):
         glEnableVertexAttribArray(0)
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, None)
 
-    def paintGL(self,context):
-
-
+    def paint_gl(self,context):
 
         glUseProgram(self.shader_program)
 
@@ -59,12 +59,12 @@ class GlowingCircle(BaseObject):
                     screen_resolution.height())
         glUniform2f(glGetUniformLocation(self.shader_program, "circle_center"), *self.circle_center)
         glUniform1f(glGetUniformLocation(self.shader_program, "circle_radius"), self.circle_radius)
-        glUniform3f(glGetUniformLocation(self.shader_program, "circle_color"), *self.circle_color)
+        glUniform3f(glGetUniformLocation(self.shader_program, "circle_color"),  *self.circle_color)
 
         glBindVertexArray(self.vao)
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4)
 
-    def resizeGL(self, w, h):
+    def resize_gl(self, w, h):
         pass
 
     def update(self,time_ms):

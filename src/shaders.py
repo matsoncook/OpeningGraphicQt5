@@ -1,8 +1,12 @@
 from OpenGL.GL import *
 from OpenGL.GL.shaders import compileShader, compileProgram
 
+from glowing_circle.glowing_circle_shader import GlowingCircleShader
+
+
 class Shaders:
     def __init__(self):
+        gc = GlowingCircleShader()
         self.glowing_circle_vertex_shader = """
                    #version 330 core
                    layout(location = 0) in vec2 position;
@@ -40,6 +44,6 @@ class Shaders:
                    }
                    """
         self.glowing_circle_shader_program = compileProgram(
-            compileShader(self.glowing_circle_vertex_shader, GL_VERTEX_SHADER),
-            compileShader(self.glowing_circle_fragment_shader, GL_FRAGMENT_SHADER)
+            compileShader(gc.glowing_circle_vertex_shader, GL_VERTEX_SHADER),
+            compileShader(gc.glowing_circle_fragment_shader, GL_FRAGMENT_SHADER)
         )
