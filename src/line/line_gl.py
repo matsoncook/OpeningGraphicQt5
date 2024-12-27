@@ -58,8 +58,8 @@ class GlowingLine(BaseObject):
         transform = np.eye(4, dtype=np.float32)
         transform[0, 0] = self.rect_scale[0]
         transform[1, 1] = self.rect_scale[1]
-        transform[3, 0] = self.rect_speed[0]
-        transform[3, 1] = self.rect_speed[1]
+        transform[0, 3] = self.rect_speed[0]
+        transform[1, 3] = self.rect_speed[1]
 
         transform_location = glGetUniformLocation(self.program, "transform")
         glUniformMatrix4fv(transform_location, 1, GL_TRUE, transform)
@@ -72,8 +72,8 @@ class GlowingLine(BaseObject):
         pass
 
     def update(self,time_ms):
-        self.rect_scale[0] += 0.01
+        #self.rect_scale[0] += 0.01
         #super().update(time_ms)
-        #self.rect_speed[0] += 0.01
+        self.rect_speed[0] += 0.01
         #self.rect_speed[1] += 0.01
 
