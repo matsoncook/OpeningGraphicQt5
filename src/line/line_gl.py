@@ -20,8 +20,11 @@ class GlowingLine(BaseObject):
         self.vbo = None
 
 
-        self.rect_pos = np.array([-0.2, -0.2, 0.2, -0.2, 0.2, 0.2, -0.2, 0.2], dtype=np.float32)
-        self.rect_speed = [0.00, 0.00]
+        self.rect_pos = np.array([-1.0, -0.05,
+                                  1.0, -0.05,
+                                  1.0, 0.05,
+                                  -1.0, 0.05], dtype=np.float32)
+        self.rect_speed = [-2.0, 0.00]
         self.rect_scale = [1.0, 1.0]
         self.scale_dir = [0.01, 0.01]
 
