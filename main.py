@@ -2,13 +2,12 @@ import sys
 from PyQt5.QtWidgets import QApplication, QOpenGLWidget
 from PyQt5.QtCore import Qt, QTimer, QElapsedTimer
 from OpenGL.GL import *
-from OpenGL.GL.shaders import compileShader, compileProgram
-import numpy as np
 
 from base.base_object import GroupObject
 from glowing_circle.glowing_circle_gl import GlowingCircle
 from line.line_gl import GlowingLine
 from shaders import Shaders
+from text.text_gl import TextGl
 
 
 class GlowingCircleWidget(QOpenGLWidget):
@@ -41,6 +40,10 @@ class GlowingCircleWidget(QOpenGLWidget):
 
         self.line2 = GlowingLine(name="line2",y=-0.25)
         self.world.add_child(self.line2)
+
+        self.text_runway = TextGl("Text_runway")
+
+        self.world.add_child(self.text_runway)
 
 
     def initializeGL(self):

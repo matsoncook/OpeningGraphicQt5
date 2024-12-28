@@ -37,6 +37,7 @@ class BaseObject:
     def resize_gl(self,w,h):
         pass
 
+    # override this to paint
     def paint_gl(self,context):
         pass
 
