@@ -9,6 +9,7 @@ class BaseObject:
         self.name = name
         self.animator_list: List[Animator] = []
         self.children: List["BaseObject"] = []
+        self.translate = (0,0,0)
 
     def update(self,time_ms):
 

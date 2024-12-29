@@ -8,6 +8,7 @@ from glowing_circle.glowing_circle_gl import GlowingCircle
 from line.line_gl import GlowingLine
 from shaders import Shaders
 from text.text_gl import TextGl
+from text.text_map_gl import TextMapGl
 
 
 class GlowingCircleWidget(QOpenGLWidget):
@@ -29,21 +30,30 @@ class GlowingCircleWidget(QOpenGLWidget):
 
     def setup_world(self):
 
-        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
-        self.world.add_child(self.glowing_circle1)
 
-        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
-        self.world.add_child(self.glowing_circle2)
+        # self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
+        # self.world.add_child(self.glowing_circle1)
+        #
+        # self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
+        # self.world.add_child(self.glowing_circle2)
 
-        self.line1 = GlowingLine(name = "line1",y=0.25)
-        self.world.add_child(self.line1)
 
-        self.line2 = GlowingLine(name="line2",y=-0.25)
-        self.world.add_child(self.line2)
 
-        self.text_runway = TextGl("Text_runway")
+        # self.line1 = GlowingLine(name = "line1",y=0.25)
+        # self.world.add_child(self.line1)
+        #
+        # self.line2 = GlowingLine(name="line2",y=-0.25)
+        # self.world.add_child(self.line2)
 
+        self.text_future = TextMapGl("Text_future", "FUTURE")
+        self.text_future.translate = (0,.15,0)
+        self.world.add_child(self.text_future)
+
+        self.text_runway = TextMapGl("Text_runway", "RUNWAY")
+        self.text_runway.translate = (0,-.15,0)
         self.world.add_child(self.text_runway)
+
+
 
 
     def initializeGL(self):
@@ -64,9 +74,10 @@ class GlowingCircleWidget(QOpenGLWidget):
 
 
     def paintGL(self):
-        glClearColor(0.0, 0.0, 0.0, 1.0)
-        glClear(GL_COLOR_BUFFER_BIT)
-        glDisable(GL_DEPTH_TEST)
+        # glClearColor(0.0, 0.0, 0.0, 1.0)
+        # glClear(GL_COLOR_BUFFER_BIT)
+        # glDisable(GL_DEPTH_TEST)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         self.world.paint(self)
 

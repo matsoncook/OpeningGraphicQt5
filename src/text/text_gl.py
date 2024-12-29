@@ -14,7 +14,8 @@ class TextGl(BaseObject):
         self.face.set_char_size(48 * 64)
 
     def init_gl(self,shaders:Shaders):
-        self.prepare_text_geometry("Hello, OpenGL!")
+        # self.prepare_text_geometry("Hello, OpenGL!")
+        self.prepare_text_geometry("e")
 
     def prepare_text_geometry(self, text):
         """
@@ -31,8 +32,8 @@ class TextGl(BaseObject):
             start_idx = len(self.vertices) // 2
             for point in outline.points:
                 self.vertices.extend([
-                    (point[0] / 64.0 + pen_x) / 500.0,  # Normalize to [-1, 1]
-                    (point[1] / 64.0 + pen_y) / 500.0,
+                    (point[0] / 64.0 + pen_x) / 100.0 -0.5,  # Normalize to [-1, 1]
+                    (point[1] / 64.0 + pen_y) / 100.0 -0.0,
                 ])
 
             for contour_start, contour_end in zip([0] + outline.contours[:-1], outline.contours):
