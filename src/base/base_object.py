@@ -1,5 +1,7 @@
 from typing import List
 
+import numpy as np
+
 from base.animator import Animator
 from shaders import Shaders
 
@@ -10,6 +12,7 @@ class BaseObject:
         self.animator_list: List[Animator] = []
         self.children: List["BaseObject"] = []
         self.translate = (0,0,0)
+        self.world_matrix = np.eye(4)
 
     def update(self,time_ms):
 
@@ -47,7 +50,11 @@ class BaseObject:
         for base_object in self.children:
             base_object.init(shaders)
 
+    def paint_prepare(self):
+        pass
+
     def paint(self,context):
+        self.paint_prepare()
         self.paint_gl(context)
         for base_object in self.children:
             base_object.paint(context)

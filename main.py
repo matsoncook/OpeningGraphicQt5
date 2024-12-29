@@ -5,6 +5,7 @@ from OpenGL.GL import *
 
 from base.base_object import GroupObject
 from glowing_circle.glowing_circle_gl import GlowingCircle
+from glowing_rectangle.glowing_rectangle_gl import GlowingRectangle
 from line.line_gl import GlowingLine
 from shaders import Shaders
 from text.text_gl import TextGl
@@ -45,13 +46,16 @@ class GlowingCircleWidget(QOpenGLWidget):
         # self.line2 = GlowingLine(name="line2",y=-0.25)
         # self.world.add_child(self.line2)
 
-        self.text_future = TextMapGl("Text_future", "FUTURE")
-        self.text_future.translate = (0,.15,0)
-        self.world.add_child(self.text_future)
+        self.glowing_rectangle1 = GlowingRectangle(name="glowing_rectangle1")
+        self.world.add_child(self.glowing_rectangle1)
 
-        self.text_runway = TextMapGl("Text_runway", "RUNWAY")
-        self.text_runway.translate = (0,-.15,0)
-        self.world.add_child(self.text_runway)
+        # self.text_future = TextMapGl("Text_future", "FUTURE")
+        # self.text_future.translate = (0,.15,0)
+        # self.world.add_child(self.text_future)
+        #
+        # self.text_runway = TextMapGl("Text_runway", "RUNWAY")
+        # self.text_runway.translate = (0,-.15,0)
+        # self.world.add_child(self.text_runway)
 
 
 
