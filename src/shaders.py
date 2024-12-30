@@ -2,7 +2,7 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import compileShader, compileProgram
 
 from glowing_circle.glowing_circle_shader import GlowingCircleShader
-from glowing_rectangle.glowing_rectangle_shader import GlowingRectangleShader
+from glowing_rectangle.glowing_rectangle_shader1 import GlowingRectangleShader
 from line.line_shader import LineShader
 
 

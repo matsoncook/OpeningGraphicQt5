@@ -52,6 +52,13 @@ class GlowingRectangle(BaseObjectGL4):
         self.vertex_array_object = self.vao
 
     def paint_gl(self,context):
+        uColor_loc = glGetUniformLocation(self.shader_program, "uColor")
+        uGlowWidth_loc = glGetUniformLocation(self.shader_program, "uGlowWidth")
+        uGlowSoft_loc = glGetUniformLocation(self.shader_program, "uGlowSoft")
+        # Set some uniform values for color and glow
+        glUniform3f(uColor_loc, 1.0, 1.0, 1.0)  # Orange-ish
+        glUniform1f(uGlowWidth_loc, 0.05)  # Glow extends 0.05 in y-direction
+        glUniform1f(uGlowSoft_loc, 20.0)  # Larger = sharper fade, smaller = slower fade
 
         glBindVertexArray(self.vao)
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, None)
