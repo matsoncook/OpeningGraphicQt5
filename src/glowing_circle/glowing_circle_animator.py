@@ -23,7 +23,7 @@ class MoveGenerally(Animator):
         c_x += (0.01 * self.direction)
 
 
-        self.glowing_circle.circle_center[0] = c_x
+        self.glowing_circle.set_circle_center_x(c_x)
         self.x = c_x
         return False
 
@@ -59,7 +59,7 @@ class MoveRight_1(Animator):
         #c_x += (0.01 * self.direction)
 
 
-        self.glowing_circle.circle_center[0] = c_x
+        self.glowing_circle.set_circle_center_x(c_x)
         self.x = c_x
         return finish
 
@@ -94,7 +94,7 @@ class MoveLeft_1(Animator):
 
 
 
-        self.glowing_circle.circle_center[0] = c_x
+        self.glowing_circle.set_circle_center_x(c_x)
         self.x = c_x
         return finish
 

@@ -16,7 +16,7 @@ class BaseObjectGL4(BaseObject):
 
     def paint_prepare(self):
         glUseProgram(self.shader_program)
-        model_loc = glGetUniformLocation(self.shader_program, 'model')
+        model_loc = glGetUniformLocation(self.shader_program, 'world_matrix')
         glUniformMatrix4fv(model_loc, 1, GL_FALSE, self.world_matrix)
 
     # def paint_gl(self, context):
