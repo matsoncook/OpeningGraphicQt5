@@ -4,25 +4,31 @@ from OpenGL.GL import *
 import numpy as np
 
 from base.base_object import BaseObject
+from base.base_object_gl4 import BaseObjectGL4
 from glowing_circle.glowing_circle_animator import MoveRight_1
 from shaders import Shaders
 
 
-class GlowingCircle(BaseObject):
+class GlowingCircle(BaseObjectGL4):
     def __init__(self, name,  y =0.0):
         super().__init__(name)
 
-        self.shader_program = None
+
         self.vao = None
 
 
         self.circle_center = [0.0, y]
+        self.world_matrix[3, 1] = y
         self.circle_radius = 0.05
 
         self.a = MoveRight_1(self)
         self.add_animator(self.a)
 
         self.circle_color = [1.0, 0.0, 0.0]
+
+    def set_circle_center_x(self,x):
+        self.circle_center[0] = x
+        self.world_matrix[3, 0] = x
 
     def init_gl(self,shaders: Shaders):
         self.init_shaders(shaders)
@@ -33,11 +39,13 @@ class GlowingCircle(BaseObject):
 
     def init_geometry(self):
         vertices = np.array([
-            -1.0, -1.0,
-            1.0, -1.0,
-            -1.0, 1.0,
-            1.0, 1.0,
+            -1.0, -1.0, 0.0,
+            1.0, -1.0, 0.0,
+            -1.0, 1.0, 0.0,
+            1.0, 1.0, 0.0
         ], dtype=np.float32)
+
+        vertices = vertices *0.15
 
         self.vao = glGenVertexArrays(1)
         vbo = glGenBuffers(1)
@@ -47,7 +55,7 @@ class GlowingCircle(BaseObject):
         glBufferData(GL_ARRAY_BUFFER, vertices.nbytes, vertices, GL_STATIC_DRAW)
 
         glEnableVertexAttribArray(0)
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, None)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, None)
 
     def paint_gl(self,context):
 
@@ -67,6 +75,6 @@ class GlowingCircle(BaseObject):
     def resize_gl(self, w, h):
         pass
 
-    def update(self,time_ms):
-        super().update(time_ms)
+    # def update(self,time_ms):
+    #     super().update(time_ms)
 
