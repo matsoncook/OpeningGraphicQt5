@@ -4,6 +4,7 @@ from OpenGL.GL.shaders import compileShader, compileProgram
 from glowing_circle.glowing_circle_shader import GlowingCircleShader
 from glowing_rectangle.glowing_rectangle_shader1 import GlowingRectangleShader
 from line.line_shader import LineShader
+from texture.texture_shader import TextureShader
 
 
 class Shaders:
@@ -23,4 +24,8 @@ class Shaders:
         )
 
         self.line_shader = LineShader()
+
+        ts = TextureShader()
+
+        self.texture_shader_program = ts.shader_program
 

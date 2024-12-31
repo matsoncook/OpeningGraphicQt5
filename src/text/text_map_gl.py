@@ -30,7 +30,8 @@ class TextMapGl(BaseObject):
         # self.create_text_image()
         # self.load_texture
         self.load_texture()
-
+    def create_geometry(self):
+        pass
     def load_texture(self):
         """
         Load the text as an OpenGL texture.

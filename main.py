@@ -11,6 +11,7 @@ from line.line_gl import GlowingLine
 from shaders import Shaders
 from text.text_gl import TextGl
 from text.text_map_gl import TextMapGl
+from texture.texture_gl import TextureGl
 
 
 class GlowingCircleWidget(QOpenGLWidget):
@@ -55,14 +56,17 @@ class GlowingCircleWidget(QOpenGLWidget):
         self.world.add_child(self.glowing_rectangle1)
         self.glowing_rectangle1.add_animator(MoveRight_1(self.glowing_rectangle1 ))
 
-        self.text_future = TextMapGl("Text_future", "FUTURE")
-        self.text_future.translate = (0,.15,0)
+        # self.text_future = TextMapGl("Text_future", "FUTURE")
+        # self.text_future.translate = (0,.15,0)
+        # self.world.add_child(self.text_future)
+        #
+        # self.text_runway = TextMapGl("Text_runway", "RUNWAY")
+        # self.text_runway.translate = (0,-.15,0)
+        # self.world.add_child(self.text_runway)
+
+        self.text_future = TextureGl("Text_future")
+        #self.text_future.translate = (0, .15, 0)
         self.world.add_child(self.text_future)
-
-        self.text_runway = TextMapGl("Text_runway", "RUNWAY")
-        self.text_runway.translate = (0,-.15,0)
-        self.world.add_child(self.text_runway)
-
 
 
 
