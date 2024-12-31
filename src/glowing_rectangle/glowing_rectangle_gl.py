@@ -11,6 +11,9 @@ class GlowingRectangle(BaseObjectGL4):
         super().__init__(name)
         self.xyxy = xyxy
 
+    def set_circle_center_x(self, x):
+
+        self.world_matrix[3, 0] = x
     def init_gl(self,shaders: Shaders):
         self.shader_program = shaders.glowing_rectangle_shader_program
 

@@ -5,7 +5,7 @@ import numpy as np
 
 from base.base_object import BaseObject
 from base.base_object_gl4 import BaseObjectGL4
-from glowing_circle.glowing_circle_animator import MoveRight_1
+
 from shaders import Shaders
 
 
@@ -21,8 +21,7 @@ class GlowingCircle(BaseObjectGL4):
         self.world_matrix[3, 1] = y
         self.circle_radius = 0.05
 
-        self.a = MoveRight_1(self)
-        self.add_animator(self.a)
+
 
         self.circle_color = [1.0, 0.0, 0.0]
 

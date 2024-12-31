@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt, QTimer, QElapsedTimer
 from OpenGL.GL import *
 
 from base.base_object import GroupObject
+from glowing_circle.glowing_circle_animator import MoveRight_1
 from glowing_circle.glowing_circle_gl import GlowingCircle
 from glowing_rectangle.glowing_rectangle_gl import GlowingRectangle
 from line.line_gl import GlowingLine
@@ -34,9 +35,11 @@ class GlowingCircleWidget(QOpenGLWidget):
 
         self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
         self.world.add_child(self.glowing_circle1)
-        #
-        # self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
-        # self.world.add_child(self.glowing_circle2)
+        self.glowing_circle1.add_animator(MoveRight_1(self.glowing_circle1 ))
+
+        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
+        self.world.add_child(self.glowing_circle2)
+        self.glowing_circle2.add_animator(MoveRight_1(self.glowing_circle2 ))
 
 
 
@@ -48,8 +51,9 @@ class GlowingCircleWidget(QOpenGLWidget):
 
 
 
-        # self.glowing_rectangle1 = GlowingRectangle(name="glowing_rectangle1",xyxy=(-0.5, 0.05, 0.5, -0.05))
-        # self.world.add_child(self.glowing_rectangle1)
+        self.glowing_rectangle1 = GlowingRectangle(name="glowing_rectangle1",xyxy=(-0.5, 0.05, 0.5, -0.05))
+        self.world.add_child(self.glowing_rectangle1)
+        self.glowing_rectangle1.add_animator(MoveRight_1(self.glowing_rectangle1 ))
 
         # self.text_future = TextMapGl("Text_future", "FUTURE")
         # self.text_future.translate = (0,.15,0)
