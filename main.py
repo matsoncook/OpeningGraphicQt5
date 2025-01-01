@@ -56,17 +56,17 @@ class GlowingCircleWidget(QOpenGLWidget):
         self.world.add_child(self.glowing_rectangle1)
         self.glowing_rectangle1.add_animator(MoveRight_1(self.glowing_rectangle1 ))
 
-        # self.text_future = TextMapGl("Text_future", "FUTURE")
-        # self.text_future.translate = (0,.15,0)
-        # self.world.add_child(self.text_future)
+        self.text_future = TextMapGl("Text_future", "FUTURE")
+        self.text_future.translate = (0,.15,0)
+        self.world.add_child(self.text_future)
         #
         # self.text_runway = TextMapGl("Text_runway", "RUNWAY")
         # self.text_runway.translate = (0,-.15,0)
         # self.world.add_child(self.text_runway)
 
-        self.text_future = TextureGl("Text_future")
-        #self.text_future.translate = (0, .15, 0)
-        self.world.add_child(self.text_future)
+        # self.text_future = TextureGl("Text_future","MicrosoftTeams-image01.png")
+        # #self.text_future.translate = (0, .15, 0)
+        # self.world.add_child(self.text_future)
 
 
 

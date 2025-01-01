@@ -6,19 +6,26 @@ from shaders import Shaders
 from OpenGL.GL import *
 from PIL import Image, ImageDraw, ImageFont
 class TextureGl(BaseObjectGL4):
-    def __init__(self,name):
+    def __init__(self,name,file_path):
         super().__init__(name)
+        self.file_path = file_path
 
     def init_gl(self, shaders: Shaders):
         # Initialize shaders
         self.shader_program = shaders.texture_shader_program
         self.initializeGL()
 
-    def load_texture(self, file_path):
+    def get_image(self):
         # Load image using PIL
-        image = Image.open(file_path)
+        image = Image.open(self.file_path)
         image = image.transpose(Image.FLIP_TOP_BOTTOM)  # Flip image vertically
         img_data = np.array(image, dtype=np.uint8)
+        return img_data
+    def load_texture(self, file_path):
+
+
+        img_data = self.get_image()
+        shape = img_data.shape
 
         # Generate and bind texture
         texture_id = glGenTextures(1)
@@ -31,7 +38,8 @@ class TextureGl(BaseObjectGL4):
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
         # Upload texture data
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data)
+        #glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, shape[1], shape[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data)
 
         return texture_id
     def initializeGL(self):

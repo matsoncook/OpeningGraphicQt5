@@ -2,7 +2,7 @@ class GlowingRectangleShader():
 
     def __init__(self):
 
-        self.glowing_rectangle_vertex_shader = """
+        self.VERTEX_SHADER = """
             #version 430 core
             layout(location = 0) in vec3 position;
             
@@ -24,7 +24,7 @@ class GlowingRectangleShader():
             }
             """
 
-        self.glowing_rectangle_fragment_shader = """
+        self.FRAGMENT_SHADER = """
         #version 330 core
 
         in vec2 vLocalPos;

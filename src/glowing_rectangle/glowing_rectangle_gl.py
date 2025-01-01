@@ -45,7 +45,7 @@ class GlowingRectangle(BaseObjectGL4):
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.nbytes, indices, GL_STATIC_DRAW)
 
         # Vertex attribute pointers
-        position_loc = glGetAttribLocation(self.shader_program, 'position')
+        position_loc = glGetAttribLocation(self.shader_program, 'aPosition')
         glVertexAttribPointer(position_loc, 3, GL_FLOAT, GL_FALSE, 3 * vertices.itemsize, None)
         glEnableVertexAttribArray(position_loc)
 

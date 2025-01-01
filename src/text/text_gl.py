@@ -5,15 +5,17 @@ from shaders import Shaders
 
 from OpenGL.GL import *
 
-class TextGl(BaseObject):
+from texture.texture_gl import TextureGl
+
+
+class TextGl(TextureGl):
     def __init__(self,name):
         super().__init__(name)
-        self.vbo = None
-        self.vertices = []
+
         self.face = freetype.Face(r"C:\Windows\Fonts\Arial.ttf")  # Replace with your font path
         self.face.set_char_size(48 * 64)
 
-    def init_gl(self,shaders:Shaders):
+    def init_gl(self, shaders:Shaders ):
         # self.prepare_text_geometry("Hello, OpenGL!")
         self.prepare_text_geometry("e")
 
