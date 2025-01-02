@@ -41,7 +41,7 @@ class GlowingRectangleShader():
             void main() {
                 float dist =  abs(vPosition.y);
                 // Simple glowing effect by using alpha blending
-                float intensity = smoothstep(0.05, 0, dist);//increase glow
+                float intensity = smoothstep(0.05, 0.0, dist);//increase glow
 
                 FragColor = vec4(1.0, 1.0, 1.0, intensity); // Orange color with a glow effect
             }

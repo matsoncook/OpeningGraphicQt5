@@ -64,6 +64,18 @@ class BaseObject:
         for base_object in self.children:
             base_object.resize(w,h)
 
+    def set_position(self, x, y, z=0.0):
+
+        self.world_matrix[3, 0] = x
+        self.world_matrix[3, 1] = y
+        self.world_matrix[3, 2] = z
+
+    def move_position(self, x=0.0, y=0.0, z=0.0):
+
+        self.world_matrix[3, 0] += x
+        self.world_matrix[3, 1] += y
+        self.world_matrix[3, 2] += z
+
 class GroupObject(BaseObject):
     def __init__(self,name):
         super().__init__(name)

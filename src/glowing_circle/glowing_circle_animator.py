@@ -1,9 +1,12 @@
 from base.animator import Animator
+from base.base_object import BaseObject
+
 
 class MoveGenerally(Animator):
-    def __init__(self,glowing_circle):
+    def __init__(self,base_bject: BaseObject, the_lambda):
         super().__init__()
-        self.glowing_circle = glowing_circle
+        self.base_bject = base_bject
+        self.the_lambda = the_lambda
         self.velocity = 1
         self.direction = 1
         self.x = -1
@@ -23,7 +26,7 @@ class MoveGenerally(Animator):
         c_x += (0.01 * self.direction)
 
 
-        self.glowing_circle.set_circle_center_x(c_x)
+
         self.x = c_x
         return False
 
@@ -59,7 +62,7 @@ class MoveRight_1(Animator):
         #c_x += (0.01 * self.direction)
 
 
-        self.glowing_circle.set_circle_center_x(c_x)
+        self.glowing_circle.set_position(c_x, self.glowing_circle.world_matrix[3,1])
         self.x = c_x
         return finish
 
@@ -92,9 +95,13 @@ class MoveLeft_1(Animator):
             self.direction *= -1
             finish = True
 
+        direction_y = self.glowing_circle.world_matrix[3,1]
+        if direction_y >= 0:
+            direction_y = 1.0
+        else:
+            direction_y = -1.0
 
-
-        self.glowing_circle.set_circle_center_x(c_x)
+        self.glowing_circle.set_position(c_x, self.glowing_circle.world_matrix[3,1]+(0.01*direction_y))
         self.x = c_x
         return finish
 

@@ -34,13 +34,7 @@ class GlowingCircleWidget(QOpenGLWidget):
     def setup_world(self):
 
 
-        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.25)
-        self.world.add_child(self.glowing_circle1)
-        self.glowing_circle1.add_animator(MoveRight_1(self.glowing_circle1 ))
 
-        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.25)
-        self.world.add_child(self.glowing_circle2)
-        self.glowing_circle2.add_animator(MoveRight_1(self.glowing_circle2 ))
 
 
 
@@ -52,13 +46,27 @@ class GlowingCircleWidget(QOpenGLWidget):
 
 
 
-        self.glowing_rectangle1 = GlowingRectangle(name="glowing_rectangle1",xyxy=(-0.5, 0.05, 0.5, -0.05))
+        self.glowing_rectangle1 = GlowingRectangle(name="glowing_rectangle1",xyxy=(-2, 0.05, 0, -0.05))
+        self.glowing_rectangle1.world_matrix[3,1] = 0.05
         self.world.add_child(self.glowing_rectangle1)
         self.glowing_rectangle1.add_animator(MoveRight_1(self.glowing_rectangle1 ))
 
-        self.text_future = TextMapGl("Text_future", "FUTURE")
-        self.text_future.translate = (0,.15,0)
-        self.world.add_child(self.text_future)
+        self.glowing_rectangle2 = GlowingRectangle(name="glowing_rectangle2", xyxy=(-2, 0.05, 0, -0.05))
+        self.glowing_rectangle2.world_matrix[3, 1] = -0.05
+        self.world.add_child(self.glowing_rectangle2)
+        self.glowing_rectangle2.add_animator(MoveRight_1(self.glowing_rectangle2))
+
+        self.glowing_circle1 = GlowingCircle(name="GlowingCircle1", y=0.05)
+        self.world.add_child(self.glowing_circle1)
+        self.glowing_circle1.add_animator(MoveRight_1(self.glowing_circle1 ))
+
+        self.glowing_circle2 = GlowingCircle(name="GlowingCircle2", y=-0.05)
+        self.world.add_child(self.glowing_circle2)
+        self.glowing_circle2.add_animator(MoveRight_1(self.glowing_circle2 ))
+
+        # self.text_future = TextMapGl("Text_future", "FUTURE")
+        # self.text_future.translate = (0,.15,0)
+        # self.world.add_child(self.text_future)
         #
         # self.text_runway = TextMapGl("Text_runway", "RUNWAY")
         # self.text_runway.translate = (0,-.15,0)
@@ -73,6 +81,8 @@ class GlowingCircleWidget(QOpenGLWidget):
     def initializeGL(self):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glDepthMask(GL_TRUE);
+
         shaders = Shaders()
 
         self.world.init(shaders)
@@ -88,6 +98,7 @@ class GlowingCircleWidget(QOpenGLWidget):
 
 
     def paintGL(self):
+        glClearColor(0.0, 0.0, 0.0, 0.0)
         # glClearColor(0.0, 0.0, 0.0, 1.0)
         # glClear(GL_COLOR_BUFFER_BIT)
         # glDisable(GL_DEPTH_TEST)

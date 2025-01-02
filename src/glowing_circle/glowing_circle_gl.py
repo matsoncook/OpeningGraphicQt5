@@ -23,11 +23,14 @@ class GlowingCircle(BaseObjectGL4):
 
 
 
-        self.circle_color = [1.0, 0.0, 0.0]
+        self.circle_color = [1.0, 1.0, 1.0]
 
-    def set_circle_center_x(self,x):
+    def set_position(self, x, y , z = 0.0):
         self.circle_center[0] = x
+        self.circle_center[1] = y
         self.world_matrix[3, 0] = x
+        self.world_matrix[3, 1] = y
+        self.world_matrix[3, 2] = z
 
     def init_gl(self,shaders: Shaders):
         self.init_shaders(shaders)
