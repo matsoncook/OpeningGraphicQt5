@@ -38,9 +38,9 @@ class MoveGenerally(Animator):
         return
 
 class MoveRight_1(Animator):
-    def __init__(self,glowing_circle,velocity = 1.0):
+    def __init__(self,base_object: BaseObject,velocity = 1.0):
         super().__init__()
-        self.glowing_circle = glowing_circle
+        self.base_object = base_object
         self.velocity = velocity
         self.direction = 1
         self.x = -1
@@ -62,21 +62,21 @@ class MoveRight_1(Animator):
         #c_x += (0.01 * self.direction)
 
 
-        self.glowing_circle.set_position(c_x, self.glowing_circle.world_matrix[3,1])
+        self.base_object.set_position(c_x, self.base_object.world_matrix[3,1])
         self.x = c_x
         return finish
 
     def next_animation(self) -> "Animator":
-        return MoveLeft_1(self.glowing_circle,0.5)
+        return MoveLeft_1(self.base_object,0.5)
 
     def reset(self):
         self.x = -1
         return
 
 class MoveLeft_1(Animator):
-    def __init__(self, glowing_circle,velocity = 1.0):
+    def __init__(self, base_object: BaseObject,velocity = 1.0):
         super().__init__()
-        self.glowing_circle = glowing_circle
+        self.base_object = base_object
         self.velocity = velocity
         self.direction = -1
         self.x = 1
@@ -95,18 +95,18 @@ class MoveLeft_1(Animator):
             self.direction *= -1
             finish = True
 
-        direction_y = self.glowing_circle.world_matrix[3,1]
+        direction_y = self.base_object.world_matrix[3,1]
         if direction_y >= 0:
             direction_y = 1.0
         else:
             direction_y = -1.0
 
-        self.glowing_circle.set_position(c_x, self.glowing_circle.world_matrix[3,1]+(0.01*direction_y))
+        self.base_object.set_position(c_x, self.base_object.world_matrix[3,1]+( 0.003 * direction_y ))
         self.x = c_x
         return finish
 
     def next_animation(self) -> "Animator":
-        return MoveRight_1(self.glowing_circle,0.25)
+        return MoveRight_1(self.base_object,0.25)
 
     def reset(self):
         self.x = 1
