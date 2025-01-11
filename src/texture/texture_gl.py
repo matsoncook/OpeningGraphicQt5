@@ -21,7 +21,7 @@ class TextureGl(BaseObjectGL4):
         image = image.transpose(Image.FLIP_TOP_BOTTOM)  # Flip image vertically
         img_data = np.array(image, dtype=np.uint8)
         return img_data
-    def load_texture(self, file_path):
+    def load_texture(self):
 
 
         img_data = self.get_image()
@@ -61,6 +61,8 @@ class TextureGl(BaseObjectGL4):
             2, 3, 0  # Second triangle
         ], dtype=np.uint32)
 
+
+
         # Create VAO
         self.vao = glGenVertexArrays(1)
         glBindVertexArray(self.vao)
@@ -85,7 +87,7 @@ class TextureGl(BaseObjectGL4):
                               ctypes.c_void_p(2 * vertices.itemsize))
 
         # Load texture
-        self.texture_id = self.load_texture("MicrosoftTeams-image01.png")
+        self.texture_id = self.load_texture()
 
         # Unbind VAO
         glBindVertexArray(0)
