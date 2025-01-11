@@ -27,7 +27,11 @@ class TextureShader:
             void main()
             {
                 // Sample the texture using the texture coordinate
+                
                 FragColor = texture(uTexture, vTexCoord);
+                
+                // vec4 temp = vec4(vTexCoord, 0.0, 1.0); 
+                //FragColor = vec4(1.0, 0.0, 0.0, 0.5);
             }
                         """
         self.shader_program = compileProgram(

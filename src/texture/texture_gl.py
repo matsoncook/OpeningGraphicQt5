@@ -43,7 +43,7 @@ class TextureGl(BaseObjectGL4):
 
         return texture_id
     def initializeGL(self):
-        glEnable(GL_DEPTH_TEST)
+        #glEnable(GL_DEPTH_TEST)
 
 
 
